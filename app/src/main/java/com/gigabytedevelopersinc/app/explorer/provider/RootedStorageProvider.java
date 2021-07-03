@@ -36,11 +36,11 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.Scanner;
 
+import com.crashlytics.android.Crashlytics;
 import com.gigabytedevelopersinc.app.explorer.BuildConfig;
 import com.gigabytedevelopersinc.app.explorer.R;
 import com.gigabytedevelopersinc.app.explorer.cursor.MatrixCursor;
 import com.gigabytedevelopersinc.app.explorer.cursor.MatrixCursor.RowBuilder;
-import com.gigabytedevelopersinc.app.explorer.misc.CrashReportingManager;
 import com.gigabytedevelopersinc.app.explorer.misc.FileUtils;
 import com.gigabytedevelopersinc.app.explorer.misc.MimePredicate;
 import com.gigabytedevelopersinc.app.explorer.misc.ParcelFileDescriptorUtil;
@@ -106,7 +106,7 @@ public class RootedStorageProvider extends StorageProvider {
             root.path = path;
             root.docId = getDocIdForRootFile(path);
         } catch (FileNotFoundException e) {
-            CrashReportingManager.logException(e);
+            Crashlytics.logException(e);
         }
 
         notifyRootsChanged(getContext());
@@ -411,14 +411,14 @@ public class RootedStorageProvider extends StorageProvider {
                     try {
                         includeRootFile(result, null, new RootFile(parent, line));
                     } catch (Exception e) {
-                        CrashReportingManager.logException(e);
+                        Crashlytics.logException(e);
                     }
 
                 }
                 scanner.close();
             }
         } catch (Exception e) {
-            CrashReportingManager.logException(e);
+            Crashlytics.logException(e);
         }
         return result;
     }

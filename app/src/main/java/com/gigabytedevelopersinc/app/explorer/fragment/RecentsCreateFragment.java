@@ -49,13 +49,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.crashlytics.android.Crashlytics;
 import com.gigabytedevelopersinc.app.explorer.BaseActivity;
 import com.gigabytedevelopersinc.app.explorer.BaseActivity.State;
 import com.gigabytedevelopersinc.app.explorer.DocumentsApplication;
 import com.gigabytedevelopersinc.app.explorer.R;
 import com.gigabytedevelopersinc.app.explorer.libcore.io.IoUtils;
 import com.gigabytedevelopersinc.app.explorer.loader.UriDerivativeLoader;
-import com.gigabytedevelopersinc.app.explorer.misc.CrashReportingManager;
 import com.gigabytedevelopersinc.app.explorer.misc.RootsCache;
 import com.gigabytedevelopersinc.app.explorer.model.DocumentStack;
 import com.gigabytedevelopersinc.app.explorer.model.DurableUtils;
@@ -186,7 +186,7 @@ public class RecentsCreateFragment extends ListFragment {
                         result.add(stack);
                     } catch (IOException e) {
                         Log.w(TAG, "Failed to resolve stack: " + e);
-                        CrashReportingManager.logException(e);
+                        Crashlytics.logException(e);
                     }
                 }
             } finally {

@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.crashlytics.android.Crashlytics;
 import com.gigabytedevelopersinc.app.explorer.BaseActivity;
 import com.gigabytedevelopersinc.app.explorer.DocumentsActivity;
 import com.gigabytedevelopersinc.app.explorer.DocumentsApplication;
@@ -50,7 +51,6 @@ import com.gigabytedevelopersinc.app.explorer.cursor.LimitCursorWrapper;
 import com.gigabytedevelopersinc.app.explorer.loader.RecentLoader;
 import com.gigabytedevelopersinc.app.explorer.misc.AnalyticsManager;
 import com.gigabytedevelopersinc.app.explorer.misc.AsyncTask;
-import com.gigabytedevelopersinc.app.explorer.misc.CrashReportingManager;
 import com.gigabytedevelopersinc.app.explorer.misc.IconUtils;
 import com.gigabytedevelopersinc.app.explorer.misc.RootsCache;
 import com.gigabytedevelopersinc.app.explorer.misc.Utils;
@@ -407,7 +407,7 @@ public class HomeFragment extends Fragment {
         }
         catch (Exception e){
             item.setVisibility(View.GONE);
-            CrashReportingManager.logException(e);
+            Crashlytics.logException(e);
         }
     }
 

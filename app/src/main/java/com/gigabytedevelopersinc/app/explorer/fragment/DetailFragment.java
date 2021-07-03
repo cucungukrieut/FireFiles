@@ -41,12 +41,12 @@ import android.widget.TextView;
 
 import java.io.File;
 
+import com.crashlytics.android.Crashlytics;
 import com.gigabytedevelopersinc.app.explorer.DialogFragment;
 import com.gigabytedevelopersinc.app.explorer.DocumentsActivity;
 import com.gigabytedevelopersinc.app.explorer.DocumentsApplication;
 import com.gigabytedevelopersinc.app.explorer.R;
 import com.gigabytedevelopersinc.app.explorer.misc.ContentProviderClientCompat;
-import com.gigabytedevelopersinc.app.explorer.misc.CrashReportingManager;
 import com.gigabytedevelopersinc.app.explorer.misc.IconColorUtils;
 import com.gigabytedevelopersinc.app.explorer.misc.IconUtils;
 import com.gigabytedevelopersinc.app.explorer.misc.MimePredicate;
@@ -214,7 +214,7 @@ public class DetailFragment extends DialogFragment {
 					if (!(e instanceof OperationCanceledException)) {
 						Log.w(TAG_DETAIL, "Failed to load thumbnail for " + uri + ": " + e);
 					}
-					CrashReportingManager.logException(e);
+					Crashlytics.logException(e);
 				} finally {
 					ContentProviderClientCompat.releaseQuietly(client);
 				}

@@ -32,6 +32,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+import com.crashlytics.android.Crashlytics;
 import com.gigabytedevelopersinc.app.explorer.R;
 import com.gigabytedevelopersinc.app.explorer.libcore.io.IoUtils;
 import com.gigabytedevelopersinc.app.explorer.model.DocumentInfo;
@@ -786,7 +787,7 @@ public class FileUtils {
             successful = true;
         } catch (IOException e) {
             Log.e("TransferThread", "writing failed");
-            CrashReportingManager.logException(e);
+            Crashlytics.logException(e);
         } finally {
             IoUtils.closeQuietly(inputStream);
             IoUtils.closeQuietly(outputStream);

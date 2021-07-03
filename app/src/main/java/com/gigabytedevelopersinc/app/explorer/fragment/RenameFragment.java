@@ -32,12 +32,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import com.crashlytics.android.Crashlytics;
 import com.gigabytedevelopersinc.app.explorer.DialogFragment;
 import com.gigabytedevelopersinc.app.explorer.DocumentsActivity;
 import com.gigabytedevelopersinc.app.explorer.R;
 import com.gigabytedevelopersinc.app.explorer.misc.AsyncTask;
 import com.gigabytedevelopersinc.app.explorer.misc.ContentProviderClientCompat;
-import com.gigabytedevelopersinc.app.explorer.misc.CrashReportingManager;
 import com.gigabytedevelopersinc.app.explorer.misc.FileUtils;
 import com.gigabytedevelopersinc.app.explorer.misc.ProviderExecutor;
 import com.gigabytedevelopersinc.app.explorer.misc.Utils;
@@ -135,7 +135,7 @@ public class RenameFragment extends DialogFragment {
                 return DocumentInfo.fromUri(resolver, childUri);
             } catch (Exception e) {
                 Log.w(TAG, "Failed to rename directory", e);
-                CrashReportingManager.logException(e);
+                Crashlytics.logException(e);
                 return null;
             } finally {
             	ContentProviderClientCompat.releaseQuietly(client);

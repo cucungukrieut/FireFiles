@@ -33,12 +33,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
 
+import com.crashlytics.android.Crashlytics;
 import com.gigabytedevelopersinc.app.explorer.BuildConfig;
 import com.gigabytedevelopersinc.app.explorer.DocumentsApplication;
 import com.gigabytedevelopersinc.app.explorer.R;
 import com.gigabytedevelopersinc.app.explorer.cursor.MatrixCursor;
 import com.gigabytedevelopersinc.app.explorer.libcore.util.Objects;
-import com.gigabytedevelopersinc.app.explorer.misc.CrashReportingManager;
 import com.gigabytedevelopersinc.app.explorer.misc.FileUtils;
 import com.gigabytedevelopersinc.app.explorer.misc.MimePredicate;
 import com.gigabytedevelopersinc.app.explorer.misc.ParcelFileDescriptorUtil;
@@ -337,7 +337,7 @@ public class UsbStorageProvider extends DocumentsProvider {
             return getMimeType(getFileForDocId(documentId));
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());
-            CrashReportingManager.logException(e);
+            Crashlytics.logException(e);
         }
 
         return BASIC_MIME_TYPE;
@@ -409,7 +409,7 @@ public class UsbStorageProvider extends DocumentsProvider {
                 row.add(Document.COLUMN_SUMMARY, FileUtils.formatFileCount(file.list().length));
             }
         } catch (IOException e) {
-            CrashReportingManager.logException(e);
+            Crashlytics.logException(e);
         }
 
         // Only publish dates reasonably after epoch
@@ -430,7 +430,7 @@ public class UsbStorageProvider extends DocumentsProvider {
                 }
             }
         } catch (Exception e){
-            CrashReportingManager.logException(e);
+            Crashlytics.logException(e);
         }
     }
 

@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2015 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.gigabytedevelopersinc.app.explorer;
 
 import android.content.ContentProviderClient;
@@ -12,6 +27,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,10 +47,10 @@ import java.io.OutputStream;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import  com.crashlytics.android.Crashlytics;
 import com.gigabytedevelopersinc.app.explorer.misc.AnalyticsManager;
 import com.gigabytedevelopersinc.app.explorer.misc.AsyncTask;
 import com.gigabytedevelopersinc.app.explorer.misc.ContentProviderClientCompat;
-import com.gigabytedevelopersinc.app.explorer.misc.CrashReportingManager;
 import com.gigabytedevelopersinc.app.explorer.misc.FileUtils;
 import com.gigabytedevelopersinc.app.explorer.misc.Utils;
 import com.gigabytedevelopersinc.app.explorer.model.DocumentsContract;
@@ -213,13 +229,13 @@ public class NoteActivity extends ActionBarActivity implements TextWatcher {
                 return text;
             }catch (Exception e){
                 errorMsg = e.getLocalizedMessage();
-                CrashReportingManager.logException(e);
+                Crashlytics.logException(e);
             }finally {
                 if(null != is){
                     try {
                         is.close();
                     } catch (Exception e) {
-                        CrashReportingManager.logException(e);
+                        Crashlytics.logException(e);
                     }
                 }
             }
@@ -287,7 +303,7 @@ public class NoteActivity extends ActionBarActivity implements TextWatcher {
                     ufos.close();
                 } catch (IOException e) {
                     errorMsg = e.getLocalizedMessage();
-                    CrashReportingManager.logException(e);
+                    Crashlytics.logException(e);
                 }
                 return null;
             } else {
@@ -301,7 +317,7 @@ public class NoteActivity extends ActionBarActivity implements TextWatcher {
                     os.close();
                 } catch (IOException e) {
                     errorMsg = e.getLocalizedMessage();
-                    CrashReportingManager.logException(e);
+                    Crashlytics.logException(e);
                 }
                 return null;
             }
@@ -349,7 +365,7 @@ public class NoteActivity extends ActionBarActivity implements TextWatcher {
             try {
                 return getContentResolver().openInputStream(uri);
             } catch (Exception e) {
-                CrashReportingManager.logException(e);
+                Crashlytics.logException(e);
             }
         } else if (scheme.startsWith(ContentResolver.SCHEME_FILE)) {
             File f = new File(uri.getPath());
@@ -357,7 +373,7 @@ public class NoteActivity extends ActionBarActivity implements TextWatcher {
                 try {
                     return new FileInputStream(f);
                 } catch (Exception e) {
-                    CrashReportingManager.logException(e);
+                    Crashlytics.logException(e);
                 }
             }
         }
@@ -373,7 +389,7 @@ public class NoteActivity extends ActionBarActivity implements TextWatcher {
                 Uri finalUri = null == documentFile ? uri : documentFile.getUri();
                 return getContentResolver().openOutputStream(finalUri);
             } catch (Exception e) {
-                CrashReportingManager.logException(e);
+                Crashlytics.logException(e);
             }
         } else if (scheme.startsWith(ContentResolver.SCHEME_FILE)) {
             File f = new File(uri.getPath());
@@ -381,7 +397,7 @@ public class NoteActivity extends ActionBarActivity implements TextWatcher {
                 try {
                     return new FileOutputStream(f);
                 } catch (Exception e) {
-                    CrashReportingManager.logException(e);
+                    Crashlytics.logException(e);
                 }
             }
         }
@@ -408,7 +424,7 @@ public class NoteActivity extends ActionBarActivity implements TextWatcher {
         else if (!TextUtils.isEmpty(scheme) && scheme.startsWith(ContentResolver.SCHEME_FILE)) {
             name = uri.getLastPathSegment();
         } else {
-            CrashReportingManager.log(TAG, uri.toString());
+            Crashlytics.log(Log.ERROR, "Error", "URI Error"); //incomplete
         }
         getSupportActionBar().setTitle(FileUtils.getName(name));
         getSupportActionBar().setSubtitle("");

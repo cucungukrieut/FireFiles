@@ -49,6 +49,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 
+import com.crashlytics.android.Crashlytics;
 import com.gigabytedevelopersinc.app.explorer.BaseActivity;
 import com.gigabytedevelopersinc.app.explorer.BaseActivity.State;
 import com.gigabytedevelopersinc.app.explorer.DialogFragment;
@@ -58,7 +59,6 @@ import com.gigabytedevelopersinc.app.explorer.adapter.RootsExpandableAdapter;
 import com.gigabytedevelopersinc.app.explorer.libcore.util.Objects;
 import com.gigabytedevelopersinc.app.explorer.loader.RootsLoader;
 import com.gigabytedevelopersinc.app.explorer.misc.AnalyticsManager;
-import com.gigabytedevelopersinc.app.explorer.misc.CrashReportingManager;
 import com.gigabytedevelopersinc.app.explorer.misc.RootsCache;
 import com.gigabytedevelopersinc.app.explorer.misc.Utils;
 import com.gigabytedevelopersinc.app.explorer.model.DocumentInfo;
@@ -226,7 +226,7 @@ public class RootsFragment extends Fragment {
                             //mList.setSelection(index);
                             mList.setItemChecked(index, true);
                         } catch (Exception e){
-                            CrashReportingManager.logException(e);
+                            Crashlytics.logException(e);
                         }
 
                         return;
